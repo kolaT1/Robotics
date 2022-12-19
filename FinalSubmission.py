@@ -38,13 +38,27 @@ def lowerArm(duration):
 # it gets too close to a wall. It will then stop
 
 def spinSearch():
-    while True:
-        distance_sensor.wait_for_distance_farther_than(5, 'in', short_range=False)
-        motor_pair.move(1000, unit='in', steering=-30, speed=40)
+ while True:
+
+    dist_inches = distance_sensor.get_distance_inches()
+
+    if dist_inches == None:
+
+        motor_pair.move_tank(1000,unit = 'in',left_speed=25, right_speed=75)
+        motor_pair.start()
+
+
+
+    elif dist_inches >=5:
+
+        motor_pair.move_tank(1000,unit = 'in', left_speed = 25, right_speed=75)
+        motor_pair.start()
+
+
+    else:
         motor_pair.stop()
-        motor_pair.move(10, unit='in', steering=-100, speed=80)
-        motor_pair.stop()
-        #rowSearch()
+
+spinSearch()
 
 
 # ------- spinSearch -----------------------
